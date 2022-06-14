@@ -15,12 +15,11 @@
  */
 
 import { endGroup, startGroup } from "@actions/core";
-import type { GitHub } from "@actions/github/lib/utils";
 import { Context } from "@actions/github/lib/context";
+import type { GitHub } from "@actions/github/lib/utils";
 import {
   ChannelSuccessResult,
-  interpretChannelDeployResult,
-  ErrorResult,
+  interpretChannelDeployResult
 } from "./deploy";
 import { createDeploySignature } from "./hash";
 
@@ -85,7 +84,7 @@ export async function postChannelSuccessComment(
   const deploySignature = createDeploySignature(result);
   const isCommentByBot = createBotCommentIdentifier(deploySignature);
 
-  let commentId;
+  let commentId: number;
   try {
     const comments = (await github.issues.listComments(commentInfo)).data;
     for (let i = comments.length; i--; ) {
